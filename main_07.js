@@ -55,7 +55,7 @@
 //     library.forEach(element => {
 //         console.log(element);
 
-//         if (library.readingStatus === true) {
+//         if (library.readingStatus === true) { // CORREZIONE: Non hai bisogno di fare === true ma basta if (library.readingStatus)
 //             console.log(`${library.title} di ${library.author} è stato letto!`)
 //         } else {
 //             console.log(`${library.title} di ${library.author} non è ancora stato letto!`)
@@ -101,7 +101,7 @@
 
 // function checkWinner(bowling) {
 
-//   //mi son bloccato Marco
+//   //mi son bloccato Marco CORREZIONE :D :D :D ti lascio lo svolgimento dell'esercizio di seguito
 //     bowling.players.forEach(giocatore => {
 //        let totalSum = 0;
 //        totalSum =  giocatore.scores.reduce(())
@@ -109,6 +109,58 @@
 // }
 
 // checkWinner();
+
+/* CODICE MARCO */
+/*
+
+function playersTotal(bowling) {
+  const players = bowling.players;
+
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i];
+    const scores = player.scores;
+
+    let total = 0;
+
+    scores.forEach(score => total += score); // anche map()
+		// players[i].scores.forEach()
+
+    player.total = total;
+		// players[i].total = total;
+  }
+}
+
+
+function checkWinner(bowling) {
+  const players = bowling.players;
+
+  let winner;
+	// const totals = players.map(player => player.total);
+	const maxScore = Math.max(...players.map(player => player.total))
+	// const maxScore = Math.max(...totals);
+
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].total >= maxScore ) {
+      winner = players[i];
+    }
+  }
+
+	//players.forEach(player => {
+		//if (player.total >= maxScore ) {
+	     //winner = players[i];
+    //}
+	//});
+
+  return winner;
+}
+
+
+playersTotal(bowling);
+const winner = checkWinner(bowling);
+
+console.log(winner);
+
+*/
 
 
 
