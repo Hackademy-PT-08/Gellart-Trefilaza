@@ -1,11 +1,12 @@
 
 //POKEDEX
 
+
 // Crea il tuo pokedex
 
-// https://pokeapi.co/
+// https://pokeapi.co/ --> una url, quindi fare una richiesta al server per mezzo di una fetch
 
-// Mostrare i pokemon in delle card con img, nome, e tipologia (types: grass, poison, etc…)
+// Mostrare i pokemon in delle card con img, nome, e tipologia (types: grass, poison, etc…) --> fare una funzione che mi crei le carte per mezzo di un ciclo 
 
 // ```jsx
 // // usare il parametro ?limit=150 altrimenti ci sono troppi risultati
@@ -19,46 +20,67 @@
 
 // BONUS: se volete potete fare il dettaglio del pokemon in una [modale](https://getbootstrap.com/docs/5.3/components/modal/)
 
+//variabili
+const row = document.createElement("div");
+row.classList.add("row");
 
+//DICHIARAZIONI
 
-//creo una funzione con annidata una fetch per far una richiesta al server
+//funzione con annidata una fetch
 function getAllPokemon() {
 
-    fetch("https://pokeapi.co/api/v2/pokemon?offset=20&limit=20")
-        .then(res => { return res.json() })
-        .then(data => {
-
-            //funzione per generare cards pokemon
-            createPokemonCards(data)
-        });
+    //faccio una richiesta al server , quindi utilizzo una fetch
+    fetch("https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20")
+      .then(res => {
+        //la risposta che arriva la converto in json
+        return res.json()
+      })
+      .then(data =>{
+        console.log(data.results)
+        createPokemonCards()
+      })
+      .catch(error => {
+        console.log(error)
+      })
 }
 
-getAllPokemon()
-
-//creo una funzione per creare dinamicamente le pokemon cards
+//function per creare le carte pokemon
 function createPokemonCards(listaPokemon) {
 
-    //richiamo un <div></div> con la classe id="pokedex"
-    const pokedex = document.getElementById(`pokedex`);
+  const pokedex = document.getElementById("pokedex")
 
-    //ciclo il tutto per crearle dinamicamente 
+    //per crearle tutte dinamicamente so che devo fare un ciclo
     listaPokemon.forEach(pokemon => {
 
-        //template literal
-        let cardTemplate =
+      //creazione div card
+      const pokemonCard = document.createElement("div")
+      //assegnazione classi a div card
+      pokemonCard.classList.add("card","mt-3")
 
-           ` <div id="cards_col" class="col">
-                <div class="card mt-5" style="width: 18rem;">
-                    <img src="${pokemon.img}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${pokemon,name}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the
-                                bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                </div>
-            </div>`
-            pokedex.insertAdjacentElement("beforeend", cardTemplate)
+      //creazione div col card
+      const colPokemonCard = document.createElement("div")
+      //assegnazione classi a colPokemonCard
+      colPokemonCard.classList.add("col-sm-6", "col-md-5", "col-lg-3", "mt-5")
+      
+      //creazione template
+      let pokemonCardTemplate = `
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>`
+
+      pokemonCard.innerHTML = pokemonCardTemplate;
+      pokedex.appendChild(row);
+      row.appendChild(colPokemonCard);
+      colPokemonCard.appendChild(pokemonCard)
     });
 }
+
+
+
+
+
+//INVOCAZIONI
+getAllPokemon();
